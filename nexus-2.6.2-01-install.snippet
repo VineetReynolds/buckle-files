@@ -23,6 +23,7 @@ cp nexus-2.6.2-01/bin/jsw/linux-x86-64/nexus /etc/init.d/nexus
 ## PATH=$JAVA_HOME/bin:$PATH
 
 # Transfer ownership to the restricted user
+sudo chown -R nexus:nexus /opt/nexus
 sudo chown -R nexus:nexus /opt/nexus-2.6.2-01
 
 # Setup the script to run on start
