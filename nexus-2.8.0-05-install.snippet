@@ -1,30 +1,31 @@
 # Download Nexus
 cd ~/Downloads/
-wget http://download.sonatype.com/nexus/oss/nexus-2.6.2-01-bundle.tar.gz
+wget http://download.sonatype.com/nexus/oss/nexus-2.8.0-05-bundle.tar.gz
 
 # Copy and install to /opt
-sudo cp nexus-2.6.2-01-bundle.tar.gz /opt
+sudo cp nexus-2.8.0-05-bundle.tar.gz /opt
 cd /opt
-sudo tar zxvf nexus-2.6.2-01-bundle.tar.gz
-ln -s nexus-2.6.2-01 nexus
+sudo tar zxvf nexus-2.8.0-05-bundle.tar.gz
+sudo ln -s nexus-2.8.0-05 nexus
 
 ## Setup nexus as a service
 
 # Copy the architecture specific (in this case, linux-x86-64) nexus script to /etc/init.d/
-cp nexus-2.6.2-01/bin/jsw/linux-x86-64/nexus /etc/init.d/nexus
+cp nexus-2.8.0-05/bin/nexus /etc/init.d/nexus
 
 # Edit the startup script (Manually steps involved)
 
 # MANUAL- Modify NEXUS_HOME to /opt/nexus
-# MANUAL- Modify RUN_AS_USER to a restricted user (not root). Preferably create a new user 'nexus', like so: 'sudo useradd nexus'
+# MANUAL- Modify RUN_AS_USER to a restricted user (not root). Preferably create a new user 'nexus', like so: 'sudo useradd nexus -U'
 # MANUAL- Modify PID_DIR to a directory accessible to the restricted user, like /var/run/nexus. To create it: sudo mkdir -p /var/run/nexus And to own it sudo chown -R nexus:nexus /var/run/nexus
-# MANUAL - Modify/add JAVA_HOME in this script, since the newly created user may not have 'java' in PATH. Remove the hashes from the next two lines. Replace JAVA_HOME location if necessary.
+# MANUAL - Optionally modify/add JAVA_HOME in this script, since the newly created user may not have 'java' in PATH. Remove the hashes from the next two lines. Replace JAVA_HOME location if necessary.
 ## JAVA_HOME=/usr/java/latest/
 ## PATH=$JAVA_HOME/bin:$PATH
 
 # Transfer ownership to the restricted user
 sudo chown -R nexus:nexus /opt/nexus
-sudo chown -R nexus:nexus /opt/nexus-2.6.2-01
+sudo chown -R nexus:nexus /opt/nexus-2.8.0-05
+sudo chown -R nexus:nexus /opt/sonatype-work
 
 # Setup the script to run on start
 cd /etc/init.d
